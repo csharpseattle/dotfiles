@@ -17,30 +17,20 @@ GRAY="$(tput setaf 8)"
 NC="$(tput sgr0)"
 BOLD="$(tput bold)"
 
-#
-# setup history
-#
-# set up history
-export DIRSTACKSIZE=12
-export DIRSTACKFILE=~/.zdirs
-export HISTSIZE=50000
-export SAVEHIST=50000
-export HISTFILE=~/.history
-setopt append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-setopt hist_verify
-setopt inc_append_history
-setopt share_history # share command history data
-setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups
-
 
 #
 # determine the shell
 #
 export USER_SHELL=$(ps -p $$ -ocomm= | sed "s/-//" )
+
+
+#
+# set up common history variables
+#
+export HISTSIZE=50000
+export SAVEHIST=50000
+export HISTFILESIZE=50000
+export HISTFILE=~/.${USER_SHELL}_history
 
 
 #
@@ -60,6 +50,17 @@ if [[ $USER_SHELL = bash ]]; then
     # Bash uses \w to show the current directory
     #
     export PS1="\[${ORANGE}\]${PROMPT_HOST} \[${CYAN}\]\w\n \[${ORANGE}\]❯ \[${NC}\]"
+
+    #
+    # setup bash history
+    #
+    export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+    shopt -s histappend                      # append to history, don't overwrite it
+
+
+    # Save and reload the history after each command finishes
+    export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
 elif [[ $USER_SHELL = zsh ]]; then
     #
     # handle newline weirdness in zsh
@@ -72,6 +73,19 @@ elif [[ $USER_SHELL = zsh ]]; then
     #
     autoload -U compinit
     compinit
+
+    #
+    # setup zsh history specifics
+    #
+    setopt append_history
+    setopt extended_history
+    setopt hist_expire_dups_first
+    setopt hist_ignore_all_dups
+    setopt hist_ignore_space
+    setopt hist_verify
+    setopt inc_append_history
+    setopt share_history
+    setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups
 else
     #
     # The default it just "Username on Hostname >"
