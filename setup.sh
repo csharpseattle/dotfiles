@@ -23,4 +23,4 @@ fi
 #
 for i in .bashrc .zshrc; do
     ln -s ~/.dotfiles/dotfilesrc ~/${i}
-fi
+done
