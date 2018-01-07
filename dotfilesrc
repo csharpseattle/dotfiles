@@ -66,7 +66,7 @@ elif [[ $USER_SHELL = zsh ]]; then
     # handle newline weirdness in zsh
     #
     NEWLINE=$'\n'
-    export PS1="%F{167}${PROMPT_HOST}%f %F{039}%~ %f${NEWLINE} %F{167}❯%f "
+    export PS1="%F{220}${PROMPT_HOST}%f %F{039}%~ %f${NEWLINE} %F{220}❯%f "
 
     #
     # zsh also needs some help when it comes to command completion

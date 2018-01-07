@@ -16,7 +16,6 @@ alias ec="~/.emacs.d/scripts/ec"
 alias ea="ec ~/.zshrc"
 alias ef="ec ~/.csharpzsh/zsh_functions"
 alias lg="exit"
-alias ls="ls --color=always"
 alias ll="ls -ahl"
 alias grep="grep --color=auto -E"
 alias rgrep="grep --color=auto -r -E"
@@ -72,4 +71,5 @@ fi
 #
 if [[ $(uname) = Linux ]]; then
     alias dev="cd ~/Development"
+    alias ls="ls --color=always"
 fi
