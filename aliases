@@ -1,0 +1,74 @@
+# ----------------------------------------------------
+# common aliases
+#
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../../"
+alias ......="cd ../../../../../"
+alias .......="cd ../../../../../../"
+alias s="if [[ ! -d ~/scratch ]]; then mkdir ~/scratch; fi && cd ~/scratch"
+alias xo="xargs open"
+alias po="pbpaste > $TMPDIR/tmppaste && emacs $TMPDIR/tmppaste"
+alias ppjson="python -mjson.tool"
+alias e="~/.emacs.d/scripts/et"
+alias ec="~/.emacs.d/scripts/ec"
+alias ea="ec ~/.zshrc"
+alias ef="ec ~/.csharpzsh/zsh_functions"
+alias lg="exit"
+alias ll="ls -ahl"
+alias grep="grep --color=auto -E"
+alias rgrep="grep --color=auto -r -E"
+alias here="HERE=\$PWD; echo HERE set to \$(tput setaf 2) \$HERE \$(tput sgr0)"
+alias there="if [ -n \${HERE} ]; then echo going there \(\$(tput setaf 2) \$HERE \$(tput sgr0) \); cd \$HERE; fi"
+
+
+# ----------------------------------------------------
+# git aliases
+#
+alias gp="git pull"
+alias gpr="git pull --recurse-submodules && git submodule update"
+alias gdl="git diff HEAD^ HEAD"
+alias gc="git checkout"
+alias gs="git status"
+alias gl="git --no-pager log  -n 25 --format=\"%Cgreen%h %Cblue%cr %Creset%cn ---  %s\""
+
+
+# ----------------------------------------------------
+# zsh aliases
+#
+if [[ $USER_SHELL = zsh ]]; then
+    alias goto="set -3; goto_func"
+    alias gote="set -3; gote_func"
+fi
+
+
+# ----------------------------------------------------
+# dev aliases
+#
+if [[ -d ~/Development ]]; then
+    export DEV_ROOT=~/Development
+    alias pg="cd \$DEV_ROOT"
+    alias tf="if [[ -d $DEV_ROOT/tensorflow ]]; then cd $DEV_ROOT/tensorflow; fi"
+    alias m="cd $DEV_ROOT/models"
+fi
+
+
+# ----------------------------------------------------
+# Mac OS X aliases
+#
+if [[ $(uname) = Darwin ]]; then
+    alias doc="cd ~/Documents"
+    alias dow="cd ~/Downloads"
+    alias dev="cd ~/Development"
+    alias des="cd ~/Desktop"
+    alias d="cd ~/Desktop"
+fi
+
+
+# ----------------------------------------------------
+# Linux aliases
+#
+if [[ $(uname) = Linux ]]; then
+    alias dev="cd ~/Development"
+fi

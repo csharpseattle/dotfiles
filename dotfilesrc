@@ -1,0 +1,114 @@
+#
+# define some colors to make output pretty
+#
+BLACK="$(tput setaf 0)"
+RED="$(tput setaf 1)"
+GREEN="$(tput setaf 2)"
+ORANGE="$(tput setaf 3)"
+PURPLE="$(tput setaf 4)"
+MAGENTA="$(tput setaf 5)"
+CYAN="$(tput setaf 6)"
+WHITE="$(tput setaf 7)"
+GRAY="$(tput setaf 8)"
+
+#
+# No Color, although this will turn off all attributes, not just color
+#
+NC="$(tput sgr0)"
+BOLD="$(tput bold)"
+
+
+#
+# determine the shell
+#
+export USER_SHELL=$(ps -p $$ -ocomm= | sed "s/-//" )
+
+
+#
+# Change the prompt.
+#
+# Display the host name during an SSH session
+#
+[[ -n $SSH_CLIENT ]] && PROMPT_HOST="[$USER SSH into $(hostname -s)]:"
+
+
+#
+# export the prompt variable, PS1
+# add the working directory and the '❯'
+#
+if [[ $USER_SHELL = bash ]]; then
+    #
+    # Bash uses \w to show the current directory
+    #
+    export PS1="\[${ORANGE}\]${PROMPT_HOST} \[${CYAN}\]\w\n \[${ORANGE}\]❯ \[${NC}\]"
+elif [[ $USER_SHELL = zsh ]]; then
+    #
+    # handle newline weirdness in zsh
+    #
+    NEWLINE=$'\n'
+    export PS1="%F{167}${PROMPT_HOST}%f %F{039}%~ %f${NEWLINE} %F{167}❯%f "
+
+    #
+    # zsh also needs some help when it comes to command completion
+    #
+    autoload -U compinit
+    compinit
+else
+    #
+    # The default it just "Username on Hostname >"
+    #
+    export PS1="$USER on $(hostname -s) ❯ "
+fi
+
+#
+# change colors of ls
+#
+export CLICOLOR=1
+export LSCOLORS=GxHxcxdxCxegedabagacad
+
+
+#
+# here we follow any symlinked .rc files to their targets
+# We use this directory to run other shell scripts in the dotfiles repo
+#
+SOURCE=~
+if [[ $USER_SHELL = bash ]]; then
+    SOURCE="${BASH_SOURCE[0]}"
+elif [[ $USER_SHELL = zsh ]]; then
+    SOURCE=${(%):-%N}
+fi
+
+
+#
+# keep resolving the source of this script until it is no
+# longer a symlink
+#
+while [ -h "$SOURCE" ]; do
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+
+
+#
+# now we have the path to the dotfiles folder.  Add any further
+# customizations, aliases, functions, etc.
+#
+DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+if [[ -d $DOTFILES_DIR ]]; then
+    #
+    # add any user aliases
+    #
+    [[ -f $DOTFILES_DIR/aliases ]] && source $DOTFILES_DIR/aliases
+
+    #
+    # add functions for the shell
+    #
+    FUNCTION_FILE_NAME=${USER_SHELL}_functions
+    [[ -f $DOTFILES_DIR/${FUNCTION_FILE_NAME} ]] && source $DOTFILES_DIR/${FUNCTION_FILE_NAME}
+
+    #
+    # any local user functions will be in local_functions
+    #
+    [[ -f $DOTFILES_DIR/local_functions ]] && source $DOTFILES_DIR/local_functions
+fi

@@ -1,0 +1,216 @@
+#!/bin/bash
+
+
+function calc()
+{
+    echo "$1" | bc -l
+}
+
+
+function gdt()
+{
+    git difftool -y $1~1..$1
+}
+
+
+function gd()
+{
+    git diff $1~1..$1
+}
+
+
+function precmdWithGit()
+{
+    if [[ -n $SSH_CLIENT ]]; then
+        ## prompt when connected by ssh
+        git rev-parse --is-inside-work-tree &>  /dev/null
+
+        if [[ $? -eq 0 ]]; then
+            GIT_BRANCH=$(git branch | grep -E "^\*" | cut -c 3-)
+            PROMPT="%F{222}[%n ssh session to %m]%f%F{238} -${GIT_BRANCH}-:%f%F{100}%(?..(%?%))%f %F{039} %~ %f
+ %F{167}%%%f "
+        else
+            PROMPT="%F{222}[%n ssh session to %m]:%f%F{100}%(?..(%?%))%f %F{039} %~ %f
+ %F{167}%%%f "
+        fi
+    else
+        git rev-parse --is-inside-work-tree &> /dev/null
+
+        if [[ $? -eq 0 ]]; then
+            GIT_BRANCH=$(git branch | grep -E "^\*" | cut -c 3-)
+            PROMPT="%F{167}[%n on %m]%f%F{238} -${GIT_BRANCH}-:%f%F{100}%(?..(%?%))%f %F{039} %~ %f
+ %F{167}%%%f "
+        else
+            PROMPT="%F{167}[%n on %m]:%f%F{100}%(?..(%?%))%f %F{039} %~ %f
+ %F{167}%%%f "
+        fi
+    fi
+}
+
+
+getch ()     # gets one char from kbd, no "Enter" necessary
+{
+    OLD_STTY=`stty -g`
+    stty cbreak -echo
+    GETCH=`dd if=/dev/tty bs=1 count=1 2>/dev/null`
+    stty $OLD_STTY
+}
+
+
+
+go()
+{
+    ToRun=$1
+
+    myArray=()
+    git status --porcelain | awk '{print $2;}' | while read i
+    do
+        myArray+="$i"
+    done
+    if [[ ${#myArray} -le 0 ]]; then
+    print -P %F{red}Not a git respository or no results!!.%f
+    return 0
+    fi
+
+    # if only one result, this becomes the default
+    DIR=$myArray[1]
+
+    # let user choose if there is more than one choice.
+    if [[ ${#myArray} -gt 1 ]]; then
+    INDEX=1
+    while (( $INDEX <= ${#myArray} ))
+    do
+        if [ -d "${myArray[$INDEX]}" ]; then
+        print -P %F{039}$INDEX \) $myArray[$INDEX]%f
+        else
+        print $INDEX \) $myArray[$INDEX]
+        fi
+        (( INDEX+=1 ))
+    done
+
+    read CHOICE
+
+    DIR="${myArray[$CHOICE]}"
+    fi
+
+    eval \"$ToRun\" \"~/Development/bcl/Slots/$DIR\"
+}
+
+
+
+
+# Jump to the directory specified by what is passed in $1
+# .. if a file it will go to the enclosing directory
+# .. if a directory it will go to the parent dir.
+#  -- to use set an alias like this in .zshrc:
+#  -- alias goto='set -3; goto_func'
+goto_func()
+{
+    SearchFor=$1
+
+    myArray=()
+    find "$PWD" -name "$SearchFor" | grep -v svn | grep -v "\.git" | while read i
+    do
+       myArray+="$i"
+    done
+
+    # no results
+    if [[ ${#myArray} -le 0 ]]; then
+        print -P %F{red}Search for \'$SearchFor\' did not find any results.%f
+        return 0
+    fi
+
+    # only one result - just cd to it.
+    DIR=$myArray[1]
+
+    # let user choose if there is more than one choice.
+    if [[ ${#myArray} -gt 1 ]]; then
+        print -P %F{green}Ah, but which one? I found ${#myArray}:%f
+
+        INDEX=1
+        while (( $INDEX <= ${#myArray} ))
+        do
+            if [ -d "${myArray[$INDEX]}" ]; then
+                print -P %F{039}$INDEX \) $myArray[$INDEX]%f
+            else
+                print $INDEX \) $myArray[$INDEX]
+            fi
+            (( INDEX+=1 ))
+        done
+
+        read CHOICE
+
+        # cd to the choosen dir
+        # ..if it is a dir we just need to cd into it
+        # ..if it is a file we need to get the dirname
+        # ....before cd'ing into it.
+        if [ -d "${myArray[$CHOICE]}" ]
+        then
+            DIR="${myArray[$CHOICE]}"
+        else
+            DIR=`dirname "${myArray[$CHOICE]}"`
+        fi
+    fi
+
+    # cd to it.
+    if [ -d "$DIR" ]
+    then
+        cd "$DIR"
+    else
+        DIRNAME=$(dirname "$DIR")
+        cd "$DIRNAME"
+    fi
+
+    # reset default zsh option to print an error if globbing
+    # results in no matches.
+    set +3
+}
+
+
+### git add untracked files
+gauf()
+{
+    git status -s | grep "^\?\?" | cut -c 4- | while read i
+    do
+        echo git add "$i"
+        git add "$i"
+    done
+}
+
+
+
+### git rm untracked files
+##   -- Removes all untracked files in the git repo
+grmuf()
+{
+    git status -s | grep "^\?\?" | cut -c 4- | while read i
+    do
+        echo removing "$i"
+        rm -R "$i"
+    done
+}
+
+
+### Convenience function for grepping history
+function h()
+{
+    if [ -z "$*" ]; then
+        history 1
+    else
+        history 1 | egrep "$@"
+    fi
+}
+
+function ff { osascript -e 'tell application "Finder"'\
+ -e "if (${1-1} <= (count Finder windows)) then"\
+ -e "get POSIX path of (target of window ${1-1} as alias)"\
+ -e 'else' -e 'get POSIX path of (desktop as alias)'\
+ -e 'end if' -e 'end tell'; };\
+
+function cdff { cd "`ff $@`"; };
+
+
+function files_below
+{
+    find . -maxdepth 1 -mindepth 1 -type d | while read i; do num=$(find $i -type f | wc -l); printf "$i -- $num"; printf "\n"; done
+}
