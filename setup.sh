@@ -24,6 +24,16 @@ if [[ -f ~/.zshrc ]]; then
 fi
 
 #
+# If we are on a mac we will need the XCode Command Line Tools
+#
+if [ $(uname) = "Darwin" ]; then
+    xcode-select -p &> /dev/null
+    if [ ! $? -eq 0 ]; then
+        xcode-select --install
+    fi
+fi
+
+#
 # Clone the dotfiles repo
 #
 if [[ ! -d ~/.dotfiles ]]; then

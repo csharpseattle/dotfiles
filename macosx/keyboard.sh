@@ -70,9 +70,7 @@ function changeKeyboardModifiers()
     RIGHT_OPTION=30064771302
 
     if [ -n "$1" ]; then
-        echo "okay --------------------"
         if [ $1 = "emacs" ]; then
-            echo "good =------------ - - -  $(findKeyboardDomainString)"
             #
             # Change caps lock to ctrl
             #
