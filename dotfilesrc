@@ -66,7 +66,7 @@ elif [[ $USER_SHELL = zsh ]]; then
     # handle newline weirdness in zsh
     #
     NEWLINE=$'\n'
-    export PS1="%F{220}${PROMPT_HOST}%f %F{039}%~ %f${NEWLINE} %F{220}❯%f "
+    export PS1="%F{220}${PROMPT_HOST}%f %F{039}%~ %f${NEWLINE} %F{215}❯%f "
 
     #
     # zsh also needs some help when it comes to command completion
@@ -86,6 +86,16 @@ elif [[ $USER_SHELL = zsh ]]; then
     setopt inc_append_history
     setopt share_history
     setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups
+
+    #
+    # zsh highlighting is good
+    #
+    source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+    # google cloud completion
+    source ~/bin/google-cloud-sdk/completion.zsh.inc
+    source ~/bin/google-cloud-sdk/path.zsh.inc
+
 else
     #
     # The default it just "Username on Hostname >"
@@ -144,4 +154,12 @@ if [[ -d $DOTFILES_DIR ]]; then
     # any local user functions will be in local_functions
     #
     [[ -f $DOTFILES_DIR/local_functions ]] && source $DOTFILES_DIR/local_functions
+fi
+
+
+#
+# set PATH so it includes private bin if it exists
+#
+if [[ -d ~/bin ]]; then
+    export PATH=~/bin:${PATH}
 fi

@@ -13,7 +13,7 @@ alias po="pbpaste > $TMPDIR/tmppaste && emacs $TMPDIR/tmppaste"
 alias ppjson="python -mjson.tool"
 alias e="~/.emacs.d/scripts/et"
 alias ec="~/.emacs.d/scripts/ec"
-alias ea="ec ~/.zshrc"
+alias ea="ec ~/.dotfiles/aliases"
 alias ef="ec ~/.csharpzsh/zsh_functions"
 alias lg="exit"
 alias ll="ls -ahl"
@@ -48,8 +48,10 @@ fi
 #
 if [[ -d ~/Development ]]; then
     export DEV_ROOT=~/Development
+    export TF_ROOT=$DEV_ROOT/mixology/client/lib/tensorflow
     alias pg="cd \$DEV_ROOT"
-    alias tf="if [[ -d $DEV_ROOT/tensorflow ]]; then cd $DEV_ROOT/tensorflow; fi"
+    alias tf="if [[ -d $TF_ROOT ]]; then cd $TF_ROOT; else echo \"${RED}Tensorflow directory not found${NC}\"; fi"
+    alias mix="if [[ -d $DEV_ROOT/mixology ]]; then cd $DEV_ROOT/mixology; else echo \"${RED}Mixology directory not found${NC}\"; fi"
     alias m="cd $DEV_ROOT/models"
 fi
 
