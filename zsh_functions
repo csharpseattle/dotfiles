@@ -214,3 +214,8 @@ function files_below
 {
     find . -maxdepth 1 -mindepth 1 -type d | while read i; do num=$(find $i -type f | wc -l); printf "$i -- $num"; printf "\n"; done
 }
+
+function links_below
+{
+    find . -maxdepth 1 -mindepth 1 -type d | while read i; do num=$(find $i -type l | wc -l); printf "$i -- $num"; printf "\n"; done
+}
