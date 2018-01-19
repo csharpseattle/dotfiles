@@ -40,6 +40,7 @@ alias gl="git --no-pager log  -n 25 --format=\"%Cgreen%h %Cblue%cr %Creset%cn --
 if [[ $USER_SHELL = zsh ]]; then
     alias goto="set -3; goto_func"
     alias gote="set -3; gote_func"
+    alias erc="e ~/.zshrc"
 fi
 
 

@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 #
 # define some colors to make output pretty
 #
@@ -26,7 +28,7 @@ export USER_SHELL=$(ps -p $$ -ocomm= | sed "s/-//" )
 #
 # Emacs is the default editor
 #
-export EDITOR=emacsclient
+export EDITOR=emacs
 
 #
 # set up common history variables
@@ -123,8 +125,7 @@ export LSCOLORS=GxHxcxdxCxegedabagacad
 #
 SOURCE=~
 if [[ $USER_SHELL = bash ]]; then
-    SOURCE="${BASH_SOURCE[0]}"
-elif [[ $USER_SHELL = zsh ]]; then
+    SOURCE="${BASH_SOURCE[0]}"elif [[ $USER_SHELL = zsh ]]; then
     SOURCE=${(%):-%N}
 fi
 

@@ -1,4 +1,19 @@
-# This is Git's per-user configuration file.
 [user]
     name = Chris Sharp
     email = git@ctsharp.org
+
+[diff]
+    tool = diffmerge
+
+[difftool "diffmerge"]
+    cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
+
+[merge]
+    tool = diffmerge
+
+[mergetool "diffmerge"]
+    trustExitCode = true
+    cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\"\n        \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+
+[core]
+    editor = emacs -nw

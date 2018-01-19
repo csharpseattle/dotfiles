@@ -107,4 +107,39 @@
 (load "emacs_functions")
 
 
+
+(require 'recentf)
+
+;;
+;; Re-map `find-file-read-only' to counsel-recentf
+;;
+(global-set-key (kbd "C-x C-r") 'counsel-recentf)
+
+;;
+;; enable recent files mode.
+;;
+(recentf-mode t)
+
+;;
+;;  50 recent files max
+;;
+(setq recentf-max-saved-items 50)
+
+;;
+;; Not sure if this is needed
+;;
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \\[find-file] a recent file"
+  (interactive)
+  (if (find-file (ivy-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
+;; custom-set-faces/variables was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+(custom-set-variables '(package-selected-packages (quote (counsel))))
+(custom-set-faces)
+
 (provide 'init)
