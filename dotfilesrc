@@ -23,6 +23,10 @@ BOLD="$(tput bold)"
 #
 export USER_SHELL=$(ps -p $$ -ocomm= | sed "s/-//" )
 
+#
+# Emacs is the default editor
+#
+export EDITOR=emacsclient
 
 #
 # set up common history variables
@@ -93,8 +97,11 @@ elif [[ $USER_SHELL = zsh ]]; then
     source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
     # google cloud completion
-    source ~/bin/google-cloud-sdk/completion.zsh.inc
-    source ~/bin/google-cloud-sdk/path.zsh.inc
+    #source ~/bin/google-cloud-sdk/completion.zsh.inc
+    #source ~/bin/google-cloud-sdk/path.zsh.inc
+
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
+    source /usr/local/bin/virtualenvwrapper.sh
 
 else
     #
@@ -163,3 +170,6 @@ fi
 if [[ -d ~/bin ]]; then
     export PATH=~/bin:${PATH}
 fi
+
+
+workon cv

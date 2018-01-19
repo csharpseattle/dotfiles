@@ -22,3 +22,12 @@ changeKeyboardModifiers emacs
 # Copy the terminal preferences to Library/Preferences
 #
 cp com.apple.Terminal.plist ~/Library/Preferences/
+
+#
+# Make the Development folder
+#
+for i in osx cvml csharp; do 
+    if [ ! -d ~/Development/${i} ]; then
+	mkdir -p ~/Development/${i}
+    fi
+done
