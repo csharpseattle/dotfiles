@@ -27,11 +27,9 @@
 
 
 ;;
-;;  Use ido mode
+;;  Use counsel mode
 ;;
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
+(counsel-mode 1)
 
 
 ;;

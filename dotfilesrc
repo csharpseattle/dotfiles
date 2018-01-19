@@ -96,15 +96,24 @@ elif [[ $USER_SHELL = zsh ]]; then
     #
     # zsh highlighting is good
     #
+    echo ${GREEN}Enabling ${ORANGE}zsh ${PURPLE}syntax ${RED}highlighting${NC}
     source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
     # google cloud completion
     #source ~/bin/google-cloud-sdk/completion.zsh.inc
     #source ~/bin/google-cloud-sdk/path.zsh.inc
 
+    #
+    # Enable Bash style comments
+    #
+    setopt interactivecomments
+
+    echo ${GREEN}Using Python virtual env${NC}
     export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
     source /usr/local/bin/virtualenvwrapper.sh
-
+    if [ -d ~/.virtualenvs/cv ]; then
+        workon cv
+    fi
 else
     #
     # The default it just "Username on Hostname >"
@@ -125,7 +134,8 @@ export LSCOLORS=GxHxcxdxCxegedabagacad
 #
 SOURCE=~
 if [[ $USER_SHELL = bash ]]; then
-    SOURCE="${BASH_SOURCE[0]}"elif [[ $USER_SHELL = zsh ]]; then
+    SOURCE="${BASH_SOURCE[0]}"
+elif [[ $USER_SHELL = zsh ]]; then
     SOURCE=${(%):-%N}
 fi
 
@@ -171,6 +181,3 @@ fi
 if [[ -d ~/bin ]]; then
     export PATH=~/bin:${PATH}
 fi
-
-
-workon cv
