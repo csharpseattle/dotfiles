@@ -167,13 +167,13 @@ if [[ -d $DOTFILES_DIR ]]; then
     #
     FUNCTION_FILE_NAME=${USER_SHELL}_functions
     [[ -f $DOTFILES_DIR/${FUNCTION_FILE_NAME} ]] && source $DOTFILES_DIR/${FUNCTION_FILE_NAME}
-
-    #
-    # any local user functions will be in local_functions
-    #
-    [[ -f $DOTFILES_DIR/local_functions ]] && source $DOTFILES_DIR/local_functions
 fi
 
+
+#
+# any local user configurations in ~/.localrc
+#
+[[ -f ~/.localrc ]] && source ~/.localrc
 
 #
 # set PATH so it includes private bin if it exists
