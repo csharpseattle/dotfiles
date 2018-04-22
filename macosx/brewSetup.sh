@@ -20,3 +20,10 @@ brew cask install whatsapp
 brew install graphicsmagick
 brew install ffmpeg
 brew cask install sketchup
+
+#
+# install tmux and reattach-to-user-namespace
+# so that copy and paste in tmux works
+#
+brew install tmux
+brew install reattach-to-user-namespace

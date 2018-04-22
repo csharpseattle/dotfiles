@@ -2,7 +2,7 @@
 
 
 #
-# if .bashrc and/or .zshrc are symbolic links we simply
+# if .bashrc, .zshrc, and .tmux.conf are symbolic links we simply
 # break them.  We will setup our own links
 #
 if [[ -h ~/.bashrc ]]; then
@@ -13,9 +13,13 @@ if [[ -h ~/.zshrc ]]; then
     rm ~/.zshrc
 fi
 
+if [[ -h ~/.tmux.conf ]]; then
+    rm ~/.tmux.conf
+fi
+
 
 #
-# if .bashrc and/or .zshrc exist as files we move them aside.
+# if .bashrc, .zshrc, .tmux.conf exist as files we move them aside.
 #
 if [[ -f ~/.bashrc ]]; then
     mv ~/.bashrc ~/.bashrc_moved_aside
@@ -23,6 +27,10 @@ fi
 
 if [[ -f ~/.zshrc ]]; then
     mv ~/.zshrc ~/.zshrc_moved_aside
+fi
+
+if [[ -f ~/.tmux.conf ]]; then
+    mv ~/.tmux.conf ~/.tmux_conf_moved_aside
 fi
 
 
@@ -51,6 +59,11 @@ fi
 for i in .bashrc .zshrc; do
     ln -s ~/.dotfiles/dotfilesrc ~/${i}
 done
+
+#
+# symlink tmux.conf
+#
+ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 
 
 #

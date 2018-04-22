@@ -3,15 +3,15 @@
 #
 # define some colors to make output pretty
 #
-BLACK="$(tput setaf 0)"
-RED="$(tput setaf 1)"
-GREEN="$(tput setaf 2)"
-ORANGE="$(tput setaf 3)"
-PURPLE="$(tput setaf 4)"
-MAGENTA="$(tput setaf 5)"
-CYAN="$(tput setaf 6)"
-WHITE="$(tput setaf 7)"
-GRAY="$(tput setaf 8)"
+export BLACK="$(tput setaf 0)"
+export RED="$(tput setaf 1)"
+export GREEN="$(tput setaf 2)"
+export ORANGE="$(tput setaf 3)"
+export PURPLE="$(tput setaf 4)"
+export MAGENTA="$(tput setaf 5)"
+export CYAN="$(tput setaf 6)"
+export WHITE="$(tput setaf 7)"
+export GRAY="$(tput setaf 8)"
 
 #
 # No Color, although this will turn off all attributes, not just color
@@ -110,10 +110,7 @@ elif [[ $USER_SHELL = zsh ]]; then
 
     echo ${GREEN}Using Python virtual env${NC}
     export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
-    source /usr/local/bin/virtualenvwrapper.sh
-    if [ -d ~/.virtualenvs/cv ]; then
-        workon cv
-    fi
+
 else
     #
     # The default it just "Username on Hostname >"
