@@ -27,3 +27,4 @@ brew cask install sketchup
 #
 brew install tmux
 brew install reattach-to-user-namespace
+brew install zsh-syntax-highlighting

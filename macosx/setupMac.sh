@@ -8,9 +8,9 @@
 #
 # Change the computer name.  scutil can set the ComputerName, LocalHostName, and HostName
 #
-sudo scutil -set ComputerName $USER
-#sudo scutil -set HostName $USER
-#sudo scutil -set LocalHostName $USER
+sudo scutil --set ComputerName $USER
+#sudo scutil --set HostName $USER
+#sudo scutil --set LocalHostName $USER
 
 #
 #  Show all file extensions
