@@ -1,37 +1,27 @@
 #!/bin/bash
 
-
 #
-# if .bashrc, .zshrc, and .tmux.conf are symbolic links we simply
-# break them.  We will setup our own links
+# Handle existing bashrc, zshrc, tmux.conf and gitconfig
 #
-if [[ -h ~/.bashrc ]]; then
-    rm ~/.bashrc
-fi
+for i in ~/.bashrc ~/.zshrc ~/.tmux.conf ~/.gitconfig; do
 
-if [[ -h ~/.zshrc ]]; then
-    rm ~/.zshrc
-fi
+    #
+    # if any of the above  are symbolic links we simply
+    # break them.  We will setup our own links
+    #
+    if [[ -h ${i} ]]; then
+        rm ${i}
+    fi
 
-if [[ -h ~/.tmux.conf ]]; then
-    rm ~/.tmux.conf
-fi
+    #
+    # if .bashrc, .zshrc, .tmux.conf, .gitconfig exist as
+    # in the hone directory and are not symlinks we move them aside.
+    #
+    if [[ -f $i ]]; then
+        mv $i ${i}_moved_aside
+    fi
+done
 
-
-#
-# if .bashrc, .zshrc, .tmux.conf exist as files we move them aside.
-#
-if [[ -f ~/.bashrc ]]; then
-    mv ~/.bashrc ~/.bashrc_moved_aside
-fi
-
-if [[ -f ~/.zshrc ]]; then
-    mv ~/.zshrc ~/.zshrc_moved_aside
-fi
-
-if [[ -f ~/.tmux.conf ]]; then
-    mv ~/.tmux.conf ~/.tmux_conf_moved_aside
-fi
 
 
 #
@@ -75,19 +65,16 @@ ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 #
 # Setup emacs.d
 #
-if [ ! -d ~/.emacs.d ]; then
-    mkdir ~/.emacs.d
+if [ -d ~/.emacs.d ]; then
+    mv ~/.emacs.d.moved_aside
 fi
 
 
 #
-#  symlink init.el and then lisp directory
+#  symlink emacs dir
 #
-if [ -f ~/.emacs.d/init.el ]; then
-    mv ~/.emacs.d/init.el ~/.emacs.d/init.el.moved_aside
-    ln -s ~/.dotfiles/emacs/init.el ~/.emacs.d/init.el
-    ln -s ~/.dotfiles/emacs/lisp ~/.emacs.d/lisp
-fi
+ln -s ~/.dotfiles/emacs ~/.emacs.d
+
 
 
 source ~/.bashrc
