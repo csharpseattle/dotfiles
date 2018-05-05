@@ -28,3 +28,13 @@ brew cask install sketchup
 brew install tmux
 brew install reattach-to-user-namespace
 brew install zsh-syntax-highlighting
+
+#
+# Python and Python 3
+#
+brew install python@2 python3
+
+#
+# Opencv3
+#
+brew install opencv3 --with-contrib --with-python3

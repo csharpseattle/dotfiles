@@ -166,15 +166,22 @@ if [[ -d $DOTFILES_DIR ]]; then
     [[ -f $DOTFILES_DIR/${FUNCTION_FILE_NAME} ]] && source $DOTFILES_DIR/${FUNCTION_FILE_NAME}
 fi
 
-
-#
-# any local user configurations in ~/.localrc
-#
-[[ -f ~/.localrc ]] && source ~/.localrc
-
 #
 # set PATH so it includes private bin if it exists
 #
 if [[ -d ~/bin ]]; then
     export PATH=~/bin:${PATH}
 fi
+
+
+# Virtualenv/VirtualenvWrapper
+if [[ -f /usr/local/bin/virtualenvwrapper.sh ]]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+
+
+#
+# any local user configurations in ~/.localrc
+#
+[[ -f ~/.localrc ]] && source ~/.localrc
