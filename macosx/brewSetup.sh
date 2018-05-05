@@ -1,4 +1,5 @@
 brew install wget
+brew install cmake
 
 brew cask install google-chrome
 brew cask install emacs
