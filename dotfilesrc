@@ -173,14 +173,6 @@ if [[ -d ~/bin ]]; then
     export PATH=~/bin:${PATH}
 fi
 
-
-# Virtualenv/VirtualenvWrapper
-if [[ -f /usr/local/bin/virtualenvwrapper.sh ]]; then
-    source /usr/local/bin/virtualenvwrapper.sh
-fi
-
-
-
 #
 # any local user configurations in ~/.localrc
 #

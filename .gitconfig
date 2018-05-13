@@ -17,3 +17,8 @@
 
 [core]
     editor = emacs -nw
+[http]
+    cookiefile = /Users/csharp/.gitcookies
+
+[alias]
+    unpushed = log @{u}..HEAD --graph --decorate --left-right --pretty=format:'%Cred%h%Creset %d %s %Cgreen(%cr)%Creset %Cblue[%an]%Creset' --abbrev-commit --date=relative

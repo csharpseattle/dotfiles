@@ -18,6 +18,15 @@ function gd()
     git diff $1~1..$1
 }
 
+#
+# unpushed()
+# This method prints the unpushed git commits to the console.
+#
+function unpushed()
+{
+   git log origin/master..HEAD --graph --pretty=format:'%Cred%h%Creset %d %s %Cgreen(%cr)%Creset %Cblue[%an]%Creset' --abbrev-commit --date=relative
+}
+
 
 function precmdWithGit()
 {
