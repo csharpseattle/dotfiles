@@ -66,7 +66,7 @@ ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 # Setup emacs.d
 #
 if [ -d ~/.emacs.d ]; then
-    mv ~/.emacs.d.moved_aside
+    mv ~/.emacs.d ~/.emacs.d.moved_aside
 fi
 
 
