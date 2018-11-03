@@ -61,9 +61,9 @@
 ;;
 ;;  Set a tab width of 4
 ;;
-(setq c-default-style "linux" c-basic-offset 4)
-(setq-default tab-width 4)
-(setq-default c-basic-offset 4)
+(setq c-default-style "linux" c-basic-offset 2)
+(setq-default tab-width 2)
+(setq-default c-basic-offset 2)
 (c-set-offset 'substatement-open 0)
 (setq-default indent-tabs-mode nil)
 
