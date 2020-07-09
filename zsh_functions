@@ -28,7 +28,7 @@ function unpushed()
 }
 
 
-function precmdWithGit()
+function precmd()
 {
     if [[ -n $SSH_CLIENT ]]; then
         ## prompt when connected by ssh
@@ -47,11 +47,9 @@ function precmdWithGit()
 
         if [[ $? -eq 0 ]]; then
             GIT_BRANCH=$(git branch | grep -E "^\*" | cut -c 3-)
-            PROMPT="%F{167}[%n on %m]%f%F{238} -${GIT_BRANCH}-:%f%F{100}%(?..(%?%))%f %F{039} %~ %f
- %F{167}%%%f "
+            PROMPT="%F{220}${PROMPT_HOST}%f %F{039}%~ %f%F{238}(${GIT_BRANCH})%f%F{039}:%f${NEWLINE} %F{215}❯%f "
         else
-            PROMPT="%F{167}[%n on %m]:%f%F{100}%(?..(%?%))%f %F{039} %~ %f
- %F{167}%%%f "
+            PROMPT="%F{220}${PROMPT_HOST}%f %F{039}%~ %f${NEWLINE} %F{215}❯%f "
         fi
     fi
 }
