@@ -20,6 +20,7 @@ alias lg="exit"
 alias ll="ls -ahl"
 alias grep="grep --color=auto -E"
 alias rgrep="grep --color=auto -r -E"
+alias rgs="rgrep --include=\"*.swift\""
 alias here="HERE=\$PWD; echo HERE set to \$(tput setaf 2) \$HERE \$(tput sgr0)"
 alias there="if [ -n \${HERE} ]; then echo going there \(\$(tput setaf 2) \$HERE \$(tput sgr0) \); cd \$HERE; fi"
 
@@ -27,13 +28,15 @@ alias there="if [ -n \${HERE} ]; then echo going there \(\$(tput setaf 2) \$HERE
 # ----------------------------------------------------
 # git aliases
 #
-alias gp="git pull"
+alias gp="git pull --ff-only"
 alias gpr="git pull --recurse-submodules && git submodule update"
 alias gdl="git diff HEAD^ HEAD"
 alias gc="git checkout"
 alias gs="git status"
 alias gl="git --no-pager log  -n 25 --format=\"%Cgreen%h %Cblue%cr %Creset%cn ---  %s\""
-
+alias ga='git status  -s --porcelain=2 | grep "^[12] \.[AMD]" | cut -c 113- | fzf -1 -m | while read i; do git add "$i"; done; gs'
+alias gr='git status -s --porcelain=2 | grep "^[12] [\.DAMR][DAMR]" | cut -c 113- | fzf -1 -m | while read i; do echo "Resoring $i"; git restore "$i" > /dev/null; done; gs'
+alias gds='git diff --staged'
 
 # ----------------------------------------------------
 # zsh aliases
