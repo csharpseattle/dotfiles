@@ -1,6 +1,6 @@
 [user]
     name = Chris Sharp
-    email = git@ctsharp.org
+    email = git@ctsharp.us
 
 [diff]
     tool = diffmerge
@@ -16,7 +16,7 @@
     cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\"\n        \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 
 [core]
-    editor = emacs -nw
+    editor = emacsclient -t
 [http]
     cookiefile = /Users/csharp/.gitcookies
 

@@ -166,12 +166,14 @@ if [[ -d $DOTFILES_DIR ]]; then
     [[ -f $DOTFILES_DIR/${FUNCTION_FILE_NAME} ]] && source $DOTFILES_DIR/${FUNCTION_FILE_NAME}
 fi
 
+
 #
 # set PATH so it includes private bin if it exists
 #
 if [[ -d ~/bin ]]; then
     export PATH=~/bin:${PATH}
 fi
+
 
 #
 # any local user configurations in ~/.localrc

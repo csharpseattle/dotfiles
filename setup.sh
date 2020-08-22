@@ -76,5 +76,10 @@ fi
 ln -s ~/.dotfiles/emacs ~/.emacs.d
 
 
+#
+#  symlink bin dir
+#
+ln -s ~/.dotfiles/bin ~/bin
 
-source ~/.bashrc
+
+source ~/.zshrc

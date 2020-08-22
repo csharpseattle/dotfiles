@@ -1,0 +1,1 @@
+ emacsclient -n --frame-parameters="((width . 120) (height .  155))" -c -a ""  "$@"
