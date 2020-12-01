@@ -37,6 +37,8 @@ alias gl="git --no-pager log  -n 25 --format=\"%Cgreen%h %Cblue%cr %Creset%cn --
 alias ga='git status  -s --porcelain=2 | grep "^[12] \.[AMD]" | cut -c 113- | fzf -1 -m | while read i; do git add "$i"; done; gs'
 alias gr='git status -s --porcelain=2 | grep "^[12] [\.DAMR][DAMR]" | cut -c 113- | fzf -1 -m | while read i; do echo "Resoring $i"; git restore "$i" > /dev/null; done; gs'
 alias gds='git diff --staged'
+alias sb="git checkout \$(git branch -l | fzf)"
+
 
 # ----------------------------------------------------
 # zsh aliases

@@ -16,7 +16,7 @@
     cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\"\n        \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 
 [core]
-    editor = emacsclient -t
+    editor = emacs -nw -q
 [http]
     cookiefile = /Users/csharp/.gitcookies
 

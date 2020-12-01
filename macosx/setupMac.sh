@@ -3,7 +3,7 @@
 #
 # Install Homebrew.  It gets used a lot.
 #
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c  "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 #
 # Change the computer name.  scutil can set the ComputerName, LocalHostName, and HostName
